@@ -1,16 +1,18 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
     namespace = "com.jagteshwar.cryptoapp"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.jagteshwar.cryptoapp"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -40,7 +42,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.10"
     }
     packaging {
         resources {
@@ -66,4 +68,24 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation("androidx.core:core-splashscreen:1.0.1")
+    val navVersion = "2.6.0"
+    implementation("androidx.navigation:navigation-compose:$navVersion")
+    implementation("com.google.dagger:hilt-android:2.50")
+    kapt("com.google.dagger:hilt-compiler:2.50")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("androidx.compose.foundation:foundation:1.4.3")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.31.4-beta")
+    val pagingVersion = "3.1.1"
+    implementation("androidx.paging:paging-runtime:$pagingVersion")
+    implementation("androidx.paging:paging-compose:3.2.0-rc01")
+    val roomVersion = "2.5.2"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-ktx:2.5.2")
 }
