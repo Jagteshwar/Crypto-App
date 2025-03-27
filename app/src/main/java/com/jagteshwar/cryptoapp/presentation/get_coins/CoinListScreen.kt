@@ -20,14 +20,14 @@ import okhttp3.internal.wait
 
 @Composable
 fun CoinListScreen(modifier: Modifier = Modifier, viewModel: GetCoinsViewModel) {
-    val list = viewModel.listState.value
+    val list = viewModel.listState
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        items(list){
+        items(list.value){
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {

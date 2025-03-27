@@ -7,16 +7,29 @@ import com.jagteshwar.cryptoapp.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
+import retrofit2.HttpException
+import java.io.IOException
 import javax.inject.Inject
 
 class GetCoins @Inject constructor(
     private val coinRepository: CoinRepository
 ) {
 
-    suspend operator fun invoke(): List<Coin> {
-        val coinList = coinRepository.getCoins().map { it.toCoin() }
-        return coinList
-        //  emit(Resource.Success(coinList))
+    operator fun invoke(): Flow<Resource<List<Coin>>> = flow {
+        try {
+            emit(Resource.Loading())
+            val coins = coinRepository.getCoins()
+            emit(Resource.Success(coins.map { it.toCoin() }))
+
+        } catch (e: HttpException) {
+            emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred."))
+        } catch (e: IOException) {
+            emit(
+                Resource.Error(
+                    e.localizedMessage ?: "Couldn't reach server. Check your internet connection.."
+                )
+            )
+        }
 
     }
 }
